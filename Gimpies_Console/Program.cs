@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using System.IO;
+
 namespace Gimpies_Console
 {
-
     //if (Gimpies_Console.Sil != 0 erros) {for(int i = 0; i<error; error--;){error--;}}
-
-internal class Programtes
+    internal class Programtes
     {
-        static int Attempts = 3;  // int: Represents the number of login attempts allowed.
-        static readonly string[,] inventory = new string[100, 7]; // 7 columns // string[,]: A 2D array for inventory, storing up to 100 shoes with 7 properties (ID, brand, etc.).
-        static int inventoryCount = 0;  // int: Keeps track of how many shoes have been added to the inventory.
-        static int nextShoeID = 1; // int: ID for the next shoe to be added, starts from 1 and increments.
-        static void Main(string[] _)
+        private static int Attempts = 3;  // int: Represents the number of login attempts allowed.
+        private static readonly string[,] inventory = new string[100, 7]; // 7 columns // string[,]: A 2D array for inventory, storing up to 100 shoes with 7 properties (ID, brand, etc.).
+        private static int inventoryCount = 0;  // int: Keeps track of how many shoes have been added to the inventory.
+        private static int nextShoeID = 1; // int: ID for the next shoe to be added, starts from 1 and increments.
+
+        private static void Main(string[] _)
         {
             PreloadInventory(); // Preload 6 pairs of shoes into the inventory when the program starts
-            Console.WriteLine("    __                _                                       \r\n   / /   ____  ____ _(_)___     __________________  ___  ____ \r\n  / /   / __ \\/ __ / / __ \\   / ___/ ___/ ___/ _ \\/ _ \\/ __ \\\r\n / /___/ /_/ / /_/ / / / / /  (__  ) /__/ /  /  __/  __/ / / /\r\n/_____/\\____/\\__, /_/_/ /_/  /____/\\___/_/   \\___/\\___/_/ /_/ \r\n            /____/  ");
+            Console.WriteLine("    __                 _                                       \r\n   / /   ____  ____ _(_)___     __________________  ___  ____ \r\n  / /   / __ \\/ __ / / __ \\   / ___/ ___/ ___/ _ \\/ _ \\/ __ \\\r\n / /___/ /_/ / /_/ / / / / /  (__  ) /__/ /  /  __/  __/ / / /\r\n/_____/\\____/\\__, /_/_/ /_/  /____/\\___/_/   \\___/\\___/_/ /_/ \r\n            /____/  ");
             Loginscreen();
-        } // Call the login screen 
+        } // Call the login screen
+
         // Preloads inventory: Adds 6 pre-defined shoes to the inventory and assigns unique IDs to them.
-        static void ShowMenu()
+        private static void ShowMenu()
         {
             while (true) // Infinite loop until user exits the program.
             {
@@ -43,7 +43,7 @@ internal class Programtes
                     "\n---------------------------------\n" +
                     "\n\n");
                 // string: Input for the user's menu selection.
-                Console.Write("Enter your choice: ");
+                Console.Write("Enter your choice:");
                 string CHinput = Console.ReadLine();
                 // int: Convert the user's input to a choice number.
                 if (int.TryParse(CHinput, out int choice))
@@ -55,10 +55,12 @@ internal class Programtes
                             Console.Clear();
                             ViewInventory(); // View the current inventory.
                             break;
+
                         case 2:
                             Console.Clear();
                             OrderShoes(); // Allow the user to order shoes.
                             break;
+
                         case 3:
                             Console.Clear();
                             Console.WriteLine(
@@ -66,10 +68,12 @@ internal class Programtes
                             Loginscreen(); // Go back to the login screen.
                             Attempts = 3; // Reset login attempts.
                             break;
+
                         case 0:
                             Console.WriteLine("Exiting...");
                             Environment.Exit(0); // Exit the program.
                             break;
+
                         default:
                             Console.WriteLine("Invalid choice, please try again."); // Handle invalid input.
                             break;
@@ -83,7 +87,8 @@ internal class Programtes
                 }
             }
         }
-        static void PreloadInventory()
+
+        private static void PreloadInventory()
         {
             // string[,]: Array holding preloaded shoe details.
             string[,] initialShoes =
@@ -108,8 +113,9 @@ internal class Programtes
                 inventoryCount++;
             }
         }
+
         // Displays all shoes in the inventory.
-        static void ViewInventory()
+        private static void ViewInventory()
         {
             // If no shoes are in inventory, notify the user.
             if (inventoryCount == 0)
@@ -119,17 +125,17 @@ internal class Programtes
             }
             // Displays the headers for the shoe details.
             Console.WriteLine("ID   Brand        Type        Size    Color      Amount      Price");
-            Console.WriteLine("---------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------");
             // Loops through the inventory and displays each shoe's details.
             for (int i = 0; i < inventoryCount; i++)
             {
                 Console.WriteLine($"{inventory[i, 0],-4} {inventory[i, 1],-12} {inventory[i, 2],-10} {inventory[i, 3],-6} {inventory[i, 4],-7} {inventory[i, 5],-7} {inventory[i, 6]}");
             }
             Console.ReadKey();
-            
         }
+
         // Allows the user to order shoes by selecting a shoe from the preloaded inventory.
-        static void OrderShoes()
+        private static void OrderShoes()
         {
             // If no shoes are in inventory, notify the user.
             if (inventoryCount == 0)
@@ -139,7 +145,7 @@ internal class Programtes
             }
             // Displays the headers for the shoe details.
             Console.WriteLine("ID   Brand        Type        Size    Color      Amount      Price");
-            Console.WriteLine("---------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------");
             // Loops through the inventory and displays each shoe's details.
             for (int i = 0; i < inventoryCount; i++)
             {
@@ -148,17 +154,21 @@ internal class Programtes
 
             Console.WriteLine("Choose from the available shoes above by entering the shoe ID:");
             // string: Read the user's input for the shoe ID.
-            Console.Write("Enter *exit* to return to previous menu/ Enter the shoe ID to order: ");
+            Console.Write("Enter *E* to return to previous menu/ Enter the shoe ID to order: ");
             string input = Console.ReadLine();
-            if (input == "exit")
-            { 
-                   ShowMenu();
+            if (input == "E")
+            {
+                ShowMenu();
+            }
+
+            if (input == "")
+            {
             }
             // Converts the user's input to an integer (shoe ID), validating the input.
             if (!int.TryParse(input, out int shoeID))
             {
-                Console.WriteLine("Invalid input. Please enter a valid shoe ID.");
-                Console.ReadKey(); // Wait for user to acknowledge the message
+                Console.WriteLine("Invalid input. Please enter a valid shoe ID or input *E* to return to the main menu.");
+                Console.ReadKey();
                 Console.Clear();
                 OrderShoes(); // Restart the order process
                 return;
@@ -175,6 +185,7 @@ internal class Programtes
                     Console.Write("Enter the amount to order (maximum 150): ");
                     string amountInput = Console.ReadLine();
                     // Validate the amount input
+
                     if (!int.TryParse(amountInput, out int orderAmount) || orderAmount <= 0 || orderAmount > 150)
                     {
                         Console.WriteLine("Invalid amount. You can order between 1 and 150 shoes.");
@@ -193,15 +204,16 @@ internal class Programtes
             // If no shoe with the provided ID was found, inform the user.
             if (!shoeFound)
             {
-                Console.WriteLine("Shoe with that ID not found. Please try again.");
+                Console.WriteLine("Shoe with that ID not found. Please try again Or type *E* to exit back to the main menu.");
                 Console.ReadKey(); // Wait for user to acknowledge the message
                 Console.Clear();
                 OrderShoes(); // Restart the order process
             }
             Console.ReadKey();
         }
+
         // Displays the menu options and allows user to select actions.
-        static void OrdershoesReturner()
+        private static void OrdershoesReturner()
         {
             Console.WriteLine(
                 "----------------\n" +
@@ -220,17 +232,20 @@ internal class Programtes
                         Console.Clear();
                         OrderShoes();
                         break;
+
                     case 2:
                         Console.Clear();
                         ShowMenu();
                         break;
+
                     default:
                         return;
                 }
             }
         }
+
         // Handles the login process for the user.
-        static void Loginscreen()
+        private static void Loginscreen()
         {
             // string: Constants for the correct login credentials.
             const string correctUsername = "Inkoop";
@@ -238,7 +253,7 @@ internal class Programtes
             const string testUser = "test";
             const string testPass = "test";
             // string: Input for the username.
-            Console.WriteLine("Enter username: ");
+            Console.Write("\nEnter username: ");
             string username = Console.ReadLine();
             // string: Input for the password.
             Console.Write("Enter your password: ");
@@ -257,7 +272,7 @@ internal class Programtes
                 else if (key.Key != ConsoleKey.Backspace)
                 {
                     password += key.KeyChar; // Append typed character to the password string.
-                    Console.Write("*"); // Display an asterisk for each character.
+                    Console.Write("⚫"); // Display an asterisk for each character.
                 }
             }
             Console.WriteLine();
@@ -276,7 +291,6 @@ internal class Programtes
             }
             else
             {
-
                 Attempts--; // Reduce the number of login attempts
                 Console.WriteLine(
                    "Login failed. Incorrect username or password. " + Attempts + " Attempts left.");
@@ -297,7 +311,6 @@ internal class Programtes
                     Console.WriteLine(
                     "Login failed. Incorrect username or password. " + Attempts + " Attempts left.");
                     Console.ReadKey();
-
                 }
             }
         }
