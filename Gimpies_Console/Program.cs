@@ -272,7 +272,7 @@ namespace Gimpies_Console
                 else if (key.Key != ConsoleKey.Backspace)
                 {
                     password += key.KeyChar; // Append typed character to the password string.
-                    Console.Write("⚫"); // Display an asterisk for each character.
+                    Console.Write("*"); // Display an asterisk for each character.
                 }
             }
             Console.WriteLine();
